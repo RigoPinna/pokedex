@@ -1,0 +1,7 @@
+.__navbar_wrapper {
+    display: flex;
+    width: 100%;
+    flex-flow: row nowrap;
+    padding: 0 20px;
+    background:#282C34;
+}
