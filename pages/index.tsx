@@ -1,9 +1,8 @@
 import { GetStaticProps, NextPage } from "next";
 import { Layout } from "@/components/layouts";
-import { Button, Grid } from "@nextui-org/react";
+import { Grid } from "@nextui-org/react";
 import { pokeApi } from "@/api";
 import { _home, _pokemon_resp, _pokemons } from "@/interfaces";
-import { link } from "fs";
 import { Card } from "@/components/pokemons";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
