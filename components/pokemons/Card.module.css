@@ -1,0 +1,14 @@
+.__card_body,
+.__card_body > div {
+    overflow: initial !important;
+}
+.__card_body img {
+    transition: transform 250ms ease 0ms, opacity 200ms ease-in 0ms;
+}
+.__card_body:hover img {
+    transform: scale(1.5);
+}
+.__card_footer {
+    background: var(rgba(37, 37, 37, 0.55), linear-gradient(0deg, #9C9C9C 0%, #9C9C9C 100%), rgba(37, 37, 37, 0.55));
+    backdrop-filter: blur(50px);
+}
