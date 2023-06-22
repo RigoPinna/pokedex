@@ -1,9 +1,20 @@
-import { pokeApi } from "@/api";
-import { Layout } from "@/components/layouts";
-import { _params_pdp, _pokemon_full, _pokemons } from "@/interfaces";
-import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import React from "react";
+import {
+  Button,
+  Card,
+  Container,
+  Grid,
+  Image,
+  Row,
+  Text,
+} from "@nextui-org/react";
+
+import { Layout } from "@/components/layouts";
+import { IconRowLeft } from "@/components/ui/icons";
+
+import { pokeApi } from "@/api";
+import { _params_pdp, _pokemon_full, _pokemons } from "@/interfaces";
+import { useRouter } from "next/router";
 
 /**
  * The PDP Pokemon Details Page.
@@ -12,6 +23,8 @@ interface props {
   pokemon: _pokemon_full;
 }
 const PDP: NextPage<props> = ({ pokemon }) => {
+  const router = useRouter();
+  const handleGoToHome = () => router.back();
   return (
     <Layout>
       <Grid.Container css={{ marginTop: "5px" }} gap={2}>
@@ -29,11 +42,36 @@ const PDP: NextPage<props> = ({ pokemon }) => {
         <Grid xs={12} sm={8}>
           <Card>
             <Card.Header
-              css={{ display: "flex", justifyContent: "space-around" }}
+              css={{ display: "flex", justifyContent: "space-between" }}
             >
-              <Text transform="capitalize" h1>
-                {pokemon.name}
-              </Text>
+              <Container
+                direction="row"
+                display="flex"
+                gap={6}
+                css={{ width: "fit-content", padding: "0", margin: "0" }}
+              >
+                <Button
+                  onPress={handleGoToHome}
+                  bordered
+                  color="primary"
+                  rounded
+                  size="xs"
+                  ghost
+                  css={{
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    marginRight: "10px",
+                    padding: "10px",
+                    height: "30px",
+                  }}
+                >
+                  <IconRowLeft />
+                  <span>Volver</span>
+                </Button>
+                <Text transform="capitalize" h1>
+                  {pokemon.name}
+                </Text>
+              </Container>
               <Button color="gradient" ghost>
                 Save Favorites
               </Button>
