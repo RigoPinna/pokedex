@@ -15,6 +15,9 @@ import { IconRowLeft } from "@/components/ui/icons";
 import { pokeApi } from "@/api";
 import { _params_pdp, _pokemon_full, _pokemons } from "@/interfaces";
 import { useRouter } from "next/router";
+import { LocalFavorites } from "@/utils";
+import { useState } from "react";
+import Head from "next/head";
 
 /**
  * The PDP Pokemon Details Page.
@@ -24,7 +27,15 @@ interface props {
 }
 const PDP: NextPage<props> = ({ pokemon }) => {
   const router = useRouter();
+  const [isFavorite, setIsFavorite] = useState(
+    LocalFavorites.existInFavorites(pokemon.id)
+  );
   const handleGoToHome = () => router.back();
+  const handleToggleFav = () => {
+    LocalFavorites.saveToFavorites(pokemon);
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <Layout>
       <Grid.Container css={{ marginTop: "5px" }} gap={2}>
@@ -72,8 +83,12 @@ const PDP: NextPage<props> = ({ pokemon }) => {
                   {pokemon.name}
                 </Text>
               </Container>
-              <Button color="gradient" ghost>
-                Save Favorites
+              <Button
+                color="gradient"
+                ghost={!isFavorite}
+                onPress={handleToggleFav}
+              >
+                {isFavorite ? "Remove favorite" : "Add favorite"}
               </Button>
             </Card.Header>
             <Card.Body>
