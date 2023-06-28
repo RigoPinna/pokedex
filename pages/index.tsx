@@ -27,7 +27,7 @@ const Home: NextPage<_home> = ({ pokemons }) => {
       <Layout title="Pokemos">
         <Grid.Container gap={2} justify="flex-start">
           {pokemons.map((pkm) => (
-            <Card key={`${pkm.id}-${pkm.name}`} {...pkm} />
+            <Card key={`${pkm.id}-${pkm.name}`} {...pkm} src={pkm.img} />
           ))}
         </Grid.Container>
       </Layout>
