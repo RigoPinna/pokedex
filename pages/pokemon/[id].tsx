@@ -1,23 +1,19 @@
+import { useState } from "react";
+
+import { useRouter } from "next/router";
+
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import {
-  Button,
-  Card,
-  Container,
-  Grid,
-  Image,
-  Row,
-  Text,
-} from "@nextui-org/react";
+import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
+
+import confetti from "canvas-confetti";
 
 import { Layout } from "@/components/layouts";
 import { IconRowLeft } from "@/components/ui/icons";
 
 import { pokeApi } from "@/api";
-import { _params_pdp, _pokemon_full, _pokemons } from "@/interfaces";
-import { useRouter } from "next/router";
 import { LocalFavorites } from "@/utils";
-import { useState } from "react";
-import Head from "next/head";
+
+import { _params_pdp, _pokemon_full, _pokemons } from "@/interfaces";
 
 /**
  * The PDP Pokemon Details Page.
@@ -34,6 +30,17 @@ const PDP: NextPage<props> = ({ pokemon }) => {
   const handleToggleFav = () => {
     LocalFavorites.saveToFavorites(pokemon);
     setIsFavorite(!isFavorite);
+    !isFavorite &&
+      confetti({
+        zIndex: 9999,
+        particleCount: 100,
+        spread: 160,
+        angle: -100,
+        origin: {
+          x: 1,
+          y: 0,
+        },
+      });
   };
 
   return (
