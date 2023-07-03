@@ -1,20 +1,19 @@
+import { useState } from "react";
+
+import { useRouter } from "next/router";
+
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import {
-  Button,
-  Card,
-  Container,
-  Grid,
-  Image,
-  Row,
-  Text,
-} from "@nextui-org/react";
+import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
+
+import confetti from "canvas-confetti";
 
 import { Layout } from "@/components/layouts";
 import { IconRowLeft } from "@/components/ui/icons";
 
 import { pokeApi } from "@/api";
+import { LocalFavorites } from "@/utils";
+
 import { _params_pdp, _pokemon_full, _pokemons } from "@/interfaces";
-import { useRouter } from "next/router";
 
 /**
  * The PDP Pokemon Details Page.
@@ -24,9 +23,28 @@ interface props {
 }
 const PDP: NextPage<props> = ({ pokemon }) => {
   const router = useRouter();
+  const [isFavorite, setIsFavorite] = useState(
+    LocalFavorites.existInFavorites(pokemon.id)
+  );
   const handleGoToHome = () => router.back();
+  const handleToggleFav = () => {
+    LocalFavorites.saveToFavorites(pokemon);
+    setIsFavorite(!isFavorite);
+    !isFavorite &&
+      confetti({
+        zIndex: 9999,
+        particleCount: 100,
+        spread: 160,
+        angle: -100,
+        origin: {
+          x: 1,
+          y: 0,
+        },
+      });
+  };
+
   return (
-    <Layout>
+    <Layout title={pokemon.name}>
       <Grid.Container css={{ marginTop: "5px" }} gap={2}>
         <Grid xs={12} sm={4}>
           <Card isHoverable={true}>
@@ -72,8 +90,12 @@ const PDP: NextPage<props> = ({ pokemon }) => {
                   {pokemon.name}
                 </Text>
               </Container>
-              <Button color="gradient" ghost>
-                Save Favorites
+              <Button
+                color="gradient"
+                ghost={!isFavorite}
+                onPress={handleToggleFav}
+              >
+                {isFavorite ? "Remove favorite" : "Add favorite"}
               </Button>
             </Card.Header>
             <Card.Body>
