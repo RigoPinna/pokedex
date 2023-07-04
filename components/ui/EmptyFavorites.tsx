@@ -13,7 +13,7 @@ export const EmptyFavorites = () => {
         height={250}
         className={styles.__image_not_found}
       />
-      <Text h1>You don't have any favorites yet</Text>
+      <Text h1>{"You don't have any favorites yet"}</Text>
     </Container>
   );
 };
